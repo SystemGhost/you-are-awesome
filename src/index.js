@@ -2,7 +2,9 @@
 
 const createEnumerableProperty = (propertyName) => propertyName;
 const createNotEnumerableProperty = (propertyName) => Symbol(propertyName);
-const createProtoMagicObject = () => {};
+const createProtoMagicObject = () => {
+	return function() {};
+};
 
 let i = 0;
 const incrementor = () => {
@@ -12,7 +14,15 @@ const incrementor = () => {
 incrementor.valueOf = function() {
 	return i;
 }
-const asyncIncrementor = () => {};
+
+
+let param = 0;
+const asyncIncrementor = () => {
+	return new Promise((resolve, reject) => {
+	 resolve(++param);
+});
+};
+
 const createIncrementer = function*() {
 	let index = 0;
 	while (index != 'undefined') yield ++index;
@@ -20,8 +30,11 @@ const createIncrementer = function*() {
 
 // return same argument not earlier than in one second, and not later, than in two
 const returnBackInSecond = (param) => {
-
-
+	return new Promise((resolve, reject) => {
+		setTimeout(() => {
+				resolve(param);
+		}, 1000);
+});
 };
 const getDeepPropertiesCount = () => {};
 const createSerializedObject = () => {};
